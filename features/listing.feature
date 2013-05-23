@@ -9,11 +9,11 @@ Feature: Listing
     When I successfully run `usermanagecli list`
     Then the output should contain:
     """
-+----------------+-----------------+-------+------------+-----+
-| username       | name            | admin | supervisor | csr |
-+----------------+-----------------+-------+------------+-----+
-| seedadmin      | Seed Admin      | *     |            |     |
-| seedcsr        | Seed CSR        |       |            | *   |
-| seedsupervisor | Seed Supervisor |       | *          |     |
-+----------------+-----------------+-------+------------+-----+
++----+----------------+-----------------+-------+------------+-----+
+| id | username       | name            | admin | supervisor | csr |
++----+----------------+-----------------+-------+------------+-----+
+| 1  | seedadmin      | Seed Admin      | *     |            |     |
+| 2  | seedcsr        | Seed CSR        |       |            | *   |
+| 3  | seedsupervisor | Seed Supervisor |       | *          |     |
++----+----------------+-----------------+-------+------------+-----+
 """
