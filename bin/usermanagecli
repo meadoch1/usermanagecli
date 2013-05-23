@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__) + '/../lib')
+require 'rubygems'
+require 'gli'
+require 'usermanagecli'
+
+include GLI::App
+
+version Usermanagecli::VERSION
+
+desc "The url of the web service you wish to use"
+arg_name "url"
+default_value "http://localhost:3000"
+flag [:u,:url]
+
+desc 'List the users in the system and their roles'
+long_desc """
+List the username, name, and roles of each user in the system
+"""
+
+command :list do |c|
+
+  c.action do |global_options,options,args|
+    puts Usermanagecli::User.list_users(global_options[:url])
+  end
+end
+
+
+desc 'Set the values of one or more roles for a user'
+long_desc """
+Change the role assignments of the named user.
+
+Role assignments are given in the form '<role name>:<value>'.
+
+Valid role names are: admin, supervisor, csr
+Valid values to supply are: true, false
+"""
+
+command :role do |c|
+
+  c.desc "The username of the user you wish to modify"
+  c.arg_name "username"
+  c.flag [:u,:username]
+  
+  c.action do |global_options, options, args |
+    help_now!('username is required') unless options[:username]
+    puts Usermanagecli::User.set_role(global_options[:url], options[:username], args)
+  end
+end
+
+
+exit run(ARGV)

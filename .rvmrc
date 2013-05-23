@@ -1,0 +1,3 @@
+export RUBYOPT="-Ilib:test"
+rvm use 1.9.3@usermanagecli --create
+
