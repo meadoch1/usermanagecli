@@ -3,7 +3,7 @@ require 'json'
 require_relative 'format/table'
 
 module Usermanagecli
-  class User
+  class User 
     def self.list_users(url)
       values = JSON.parse RestClient.get( "#{url}/users.json")
       formatter = Format::Table.new
@@ -14,11 +14,13 @@ module Usermanagecli
     end
 
     def self.set_roles(url, user_id, role_args)
-      
+
+      resource = RestClient::Resource.new(url)
       role_args.each do |role_arg|
         role, value = role_arg.split(':')
         STDERR.puts "Error: The only valid roles are admin, supervisor, or csr" unless %w[admin supervisor csr].include?(role)
-        RestClient.put( "#{url}/users/#{user_id}.json", JSON.dump({id: user_id, "#{role}" => value}), {content_type: 'json'})
+#        RestClient.put( "#{url}/users/#{user_id}.json", JSON.dump({id: user_id, "#{role}" => value}), {content_type: 'json'})
+        @resource.put( "#{url}/users/#{user_id}.json", JSON.dump({id: user_id, "#{role}" => value}), {content_type: 'json'})
       end
       "Role(s) successfully updated"
       
